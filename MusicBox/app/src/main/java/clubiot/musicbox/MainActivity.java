@@ -63,6 +63,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void dislikeOnClicked(View view){
+        Snackbar.make(findViewById(android.R.id.content), "DisLike is send", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
+    }
+
+    public void likeOnClicked(View view){
+        Snackbar.make(findViewById(android.R.id.content), "Like is send", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
