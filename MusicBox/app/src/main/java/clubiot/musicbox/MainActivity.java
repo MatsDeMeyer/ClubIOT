@@ -14,8 +14,13 @@ import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
+
+import java.io.UnsupportedEncodingException;
 
 public class MainActivity extends AppCompatActivity {
+
+    MqttAndroidClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         String clientId = MqttClient.generateClientId();
-        MqttAndroidClient client =
+        client =
                 new MqttAndroidClient(this.getApplicationContext(), "tcp://broker.hivemq.com:1883",
                         clientId);
 
@@ -64,12 +69,37 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void dislikeOnClicked(View view){
-        Snackbar.make(findViewById(android.R.id.content), "DisLike is send", Snackbar.LENGTH_LONG)
+
+        String topic = "/clubIOT/feedback";
+        String payload = "like";
+        byte[] encodedPayload = new byte[0];
+        try {
+            encodedPayload = payload.getBytes("UTF-8");
+            MqttMessage message = new MqttMessage(encodedPayload);
+            client.publish(topic, message);
+        } catch (UnsupportedEncodingException | MqttException e) {
+            e.printStackTrace();
+        }
+
+        Snackbar.make(findViewById(android.R.id.content), "Dislike is sent", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();
+
     }
 
     public void likeOnClicked(View view){
-        Snackbar.make(findViewById(android.R.id.content), "Like is send", Snackbar.LENGTH_LONG)
+
+        String topic = "/clubIOT/feedback";
+        String payload = "like";
+        byte[] encodedPayload = new byte[0];
+        try {
+            encodedPayload = payload.getBytes("UTF-8");
+            MqttMessage message = new MqttMessage(encodedPayload);
+            client.publish(topic, message);
+        } catch (UnsupportedEncodingException | MqttException e) {
+            e.printStackTrace();
+        }
+
+        Snackbar.make(findViewById(android.R.id.content), "Like is sent", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();
     }
 
