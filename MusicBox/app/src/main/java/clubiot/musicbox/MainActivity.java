@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
     public void dislikeOnClicked(View view){
 
         String topic = "/clubIOT/feedback";
-        String payload = "like";
+        String payload = "dislike";
         byte[] encodedPayload = new byte[0];
         try {
             encodedPayload = payload.getBytes("UTF-8");
