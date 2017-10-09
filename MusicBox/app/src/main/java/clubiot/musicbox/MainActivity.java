@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
@@ -21,7 +22,6 @@ import java.io.UnsupportedEncodingException;
 public class MainActivity extends AppCompatActivity {
 
     MqttAndroidClient client;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void dislikeOnClicked(View view){
-
+        TextView tv1 = (TextView)findViewById(R.id.textView);
         String topic = "clubIOT/feedback";
         String payload = "dislike";
         byte[] encodedPayload = new byte[0];
@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
             encodedPayload = payload.getBytes("UTF-8");
             MqttMessage message = new MqttMessage(encodedPayload);
             client.publish(topic, message);
-
+            tv1.setText("dislike is send");
             Snackbar.make(findViewById(android.R.id.content), "Dislike is sent", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
 
@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void likeOnClicked(View view){
-
+        TextView tv1 = (TextView)findViewById(R.id.textView);
         String topic = "clubIOT/feedback";
         String payload = "like";
         byte[] encodedPayload = new byte[0];
@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
             encodedPayload = payload.getBytes("UTF-8");
             MqttMessage message = new MqttMessage(encodedPayload);
             client.publish(topic, message);
-
+            tv1.setText("like is send");
             Snackbar.make(findViewById(android.R.id.content), "Like is sent", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
 

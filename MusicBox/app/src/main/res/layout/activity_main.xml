@@ -10,8 +10,8 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="86dp"
-        android:layout_height="21dp"
+        android:layout_width="189dp"
+        android:layout_height="60dp"
         android:autoText="false"
         android:text="Hello World!"
         app:layout_anchor="@+id/include3"
@@ -21,7 +21,8 @@
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.502" />
 
     <Button
         android:id="@+id/buttonLike"
