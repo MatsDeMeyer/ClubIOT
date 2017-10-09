@@ -22,6 +22,7 @@ import java.lang.reflect.Method;
 import java.security.MessageDigest;
 
 public class MainActivity extends AppCompatActivity {
+    TextView tv1;
     String uniqueID;
     MqttAndroidClient client;
     @Override
@@ -39,8 +40,7 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-
-        MQTT mqtt = new MQTT(this, findViewById(android.R.id.content));
+        MQTT mqtt = new MQTT(this, (TextView)findViewById(R.id.textView));
         client = mqtt.mqttAndroidClient;
 
         //Connect to MQTT Broker
@@ -93,7 +93,6 @@ public class MainActivity extends AppCompatActivity {
             encodedPayload = payload.getBytes("UTF-8");
             MqttMessage message = new MqttMessage(encodedPayload);
             client.publish(topic, message);
-            tv1.setText("dislike is send");
             Snackbar.make(findViewById(android.R.id.content), "Dislike is sent", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
 
@@ -112,7 +111,6 @@ public class MainActivity extends AppCompatActivity {
             encodedPayload = payload.getBytes("UTF-8");
             MqttMessage message = new MqttMessage(encodedPayload);
             client.publish(topic, message);
-            tv1.setText("like is send");
             Snackbar.make(findViewById(android.R.id.content), "Like is sent", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
 

@@ -24,13 +24,14 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 public class MQTT extends Activity{
 
     public MqttAndroidClient mqttAndroidClient;
-
+    TextView tv1;
     final String serverUri = "tcp://143.129.39.151:1883";
 
     final String clientId = "ExampleAndroidClient";
     final String subscriptionTopic = "clubIOT/SongMeta";
     Context ctxt;
-    public MQTT(Context context, View view) {
+    public MQTT(Context context, TextView textview) {
+        tv1 = textview;
         ctxt = context;
         mqttAndroidClient = new MqttAndroidClient(context, serverUri, clientId);
         mqttAndroidClient.setCallback(new MqttCallback() {
@@ -42,8 +43,7 @@ public class MQTT extends Activity{
             @Override
             public void messageArrived(String topic, MqttMessage mqttMessage) throws Exception {
                 String recMessage = mqttMessage.toString();
-                //TextView txtView = (TextView) ((Activity)ctxt).findViewById(R.id.text);
-                //txtView.setText(recMessage);
+                tv1.setText(recMessage);
                 Log.w("Mqtt", recMessage);
             }
 
