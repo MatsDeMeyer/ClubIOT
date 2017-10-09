@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
@@ -27,18 +29,22 @@ public class MQTT extends Activity{
 
     final String clientId = "ExampleAndroidClient";
     final String subscriptionTopic = "clubIOT/SongMeta";
-
-    public MQTT(Context context) {
+    Context ctxt;
+    public MQTT(Context context, View view) {
+        ctxt = context;
         mqttAndroidClient = new MqttAndroidClient(context, serverUri, clientId);
         mqttAndroidClient.setCallback(new MqttCallback() {
             @Override
             public void connectionLost(Throwable throwable) {
-
+                connect();
             }
 
             @Override
             public void messageArrived(String topic, MqttMessage mqttMessage) throws Exception {
-                Log.w("Mqtt", mqttMessage.toString());
+                String recMessage = mqttMessage.toString();
+                //TextView txtView = (TextView) ((Activity)ctxt).findViewById(R.id.text);
+                //txtView.setText(recMessage);
+                Log.w("Mqtt", recMessage);
             }
 
             @Override

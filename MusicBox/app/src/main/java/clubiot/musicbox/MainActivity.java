@@ -18,9 +18,11 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Method;
+import java.security.MessageDigest;
 
 public class MainActivity extends AppCompatActivity {
-
+    String uniqueID;
     MqttAndroidClient client;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        MQTT mqtt = new MQTT(this);
+        MQTT mqtt = new MQTT(this, findViewById(android.R.id.content));
         client = mqtt.mqttAndroidClient;
 
         //Connect to MQTT Broker
@@ -70,12 +72,22 @@ public class MainActivity extends AppCompatActivity {
         }*/
 
 
+
+        try {
+            Class<?> c = Class.forName("android.os.SystemProperties");
+            Method get = c.getMethod("get", String.class, String.class );
+            uniqueID = md5((String)(   get.invoke(c, "ro.serialno", "unknown" ) ));
+        }
+        catch (Exception ignored)
+        {
+        }
+
     }
 
     public void dislikeOnClicked(View view){
         TextView tv1 = (TextView)findViewById(R.id.textView);
         String topic = "clubIOT/feedback";
-        String payload = "dislike";
+        String payload = "dislike-" + uniqueID;
         byte[] encodedPayload = new byte[0];
         try {
             encodedPayload = payload.getBytes("UTF-8");
@@ -94,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
     public void likeOnClicked(View view){
         TextView tv1 = (TextView)findViewById(R.id.textView);
         String topic = "clubIOT/feedback";
-        String payload = "like";
+        String payload = "like-" + uniqueID;
         byte[] encodedPayload = new byte[0];
         try {
             encodedPayload = payload.getBytes("UTF-8");
@@ -131,5 +143,20 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public static final String md5(final String toEncrypt) {
+        try {
+            final MessageDigest digest = MessageDigest.getInstance("md5");
+            digest.update(toEncrypt.getBytes());
+            final byte[] bytes = digest.digest();
+            final StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < bytes.length; i++) {
+                sb.append(String.format("%02X", bytes[i]));
+            }
+            return sb.toString().toLowerCase();
+        } catch (Exception exc) {
+            return ""; // Impossibru!
+        }
     }
 }
