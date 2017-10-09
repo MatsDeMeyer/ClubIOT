@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
         String clientId = MqttClient.generateClientId();
         client =
-                new MqttAndroidClient(this.getApplicationContext(), "tcp://broker.hivemq.com:1883",
+                new MqttAndroidClient(this.getApplicationContext(), "tcp://143.129.39.151:1883",
                         clientId);
 
         try {
@@ -70,37 +70,41 @@ public class MainActivity extends AppCompatActivity {
 
     public void dislikeOnClicked(View view){
 
-        String topic = "/clubIOT/feedback";
+        String topic = "clubIOT/feedback";
         String payload = "dislike";
         byte[] encodedPayload = new byte[0];
         try {
             encodedPayload = payload.getBytes("UTF-8");
             MqttMessage message = new MqttMessage(encodedPayload);
             client.publish(topic, message);
+
+            Snackbar.make(findViewById(android.R.id.content), "Dislike is sent", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+
         } catch (UnsupportedEncodingException | MqttException e) {
             e.printStackTrace();
         }
-
-        Snackbar.make(findViewById(android.R.id.content), "Dislike is sent", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
 
     }
 
     public void likeOnClicked(View view){
 
-        String topic = "/clubIOT/feedback";
+        String topic = "clubIOT/feedback";
         String payload = "like";
         byte[] encodedPayload = new byte[0];
         try {
             encodedPayload = payload.getBytes("UTF-8");
             MqttMessage message = new MqttMessage(encodedPayload);
             client.publish(topic, message);
+
+            Snackbar.make(findViewById(android.R.id.content), "Like is sent", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+
         } catch (UnsupportedEncodingException | MqttException e) {
             e.printStackTrace();
         }
 
-        Snackbar.make(findViewById(android.R.id.content), "Like is sent", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
+
     }
 
     @Override
