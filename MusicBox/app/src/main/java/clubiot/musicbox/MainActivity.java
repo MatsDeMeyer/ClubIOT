@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     TextView tv1;
     String uniqueID;
     MqttAndroidClient client;
+    MQTT mqtt;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-        MQTT mqtt = new MQTT(this, (TextView)findViewById(R.id.textView));
+        mqtt = new MQTT(this, (TextView)findViewById(R.id.textView));
         client = mqtt.mqttAndroidClient;
 
         //Connect to MQTT Broker
@@ -85,24 +86,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void dislikeOnClicked(View view){
-        TextView tv1 = (TextView)findViewById(R.id.textView);
-        String topic = "clubIOT/feedback";
-        String payload = "dislike-" + uniqueID;
-        byte[] encodedPayload = new byte[0];
-        try {
-            encodedPayload = payload.getBytes("UTF-8");
-            MqttMessage message = new MqttMessage(encodedPayload);
-            client.publish(topic, message);
-            Snackbar.make(findViewById(android.R.id.content), "Dislike is sent", Snackbar.LENGTH_LONG)
+        if(mqtt.voted == false){
+            TextView tv1 = (TextView)findViewById(R.id.textView);
+            String topic = "clubIOT/feedback";
+            String payload = "dislike-" + uniqueID;
+            byte[] encodedPayload = new byte[0];
+            try {
+                encodedPayload = payload.getBytes("UTF-8");
+                MqttMessage message = new MqttMessage(encodedPayload);
+                client.publish(topic, message);
+                Snackbar.make(findViewById(android.R.id.content), "Dislike is sent", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+
+            } catch (UnsupportedEncodingException | MqttException e) {
+                e.printStackTrace();
+            }
+            mqtt.voted = true;
+        } else {
+            Snackbar.make(findViewById(android.R.id.content), "Already voted", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
-
-        } catch (UnsupportedEncodingException | MqttException e) {
-            e.printStackTrace();
         }
-
     }
 
     public void likeOnClicked(View view){
+        if(mqtt.voted == false){
         TextView tv1 = (TextView)findViewById(R.id.textView);
         String topic = "clubIOT/feedback";
         String payload = "like-" + uniqueID;
@@ -116,6 +123,11 @@ public class MainActivity extends AppCompatActivity {
 
         } catch (UnsupportedEncodingException | MqttException e) {
             e.printStackTrace();
+        }
+            mqtt.voted = true;
+        } else {
+            Snackbar.make(findViewById(android.R.id.content), "Already voted", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
         }
 
 

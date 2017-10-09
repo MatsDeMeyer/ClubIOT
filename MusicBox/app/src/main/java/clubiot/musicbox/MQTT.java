@@ -26,6 +26,7 @@ public class MQTT extends Activity{
     public MqttAndroidClient mqttAndroidClient;
     TextView tv1;
     final String serverUri = "tcp://143.129.39.151:1883";
+    boolean voted = true;
 
     final String clientId = "ExampleAndroidClient";
     final String subscriptionTopic = "clubIOT/SongMeta";
@@ -45,6 +46,7 @@ public class MQTT extends Activity{
                 String recMessage = mqttMessage.toString();
                 tv1.setText(recMessage);
                 Log.w("Mqtt", recMessage);
+                voted = false;
             }
 
             @Override
