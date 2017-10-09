@@ -38,7 +38,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        String clientId = MqttClient.generateClientId();
+        MQTT mqtt = new MQTT(this);
+        client = mqtt.mqttAndroidClient;
+
+        //Connect to MQTT Broker
+        /*String clientId = MqttClient.generateClientId();
         client =
                 new MqttAndroidClient(this.getApplicationContext(), "tcp://143.129.39.151:1883",
                         clientId);
@@ -49,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
                     // We are connected
-                    //Log.d(TAG, "onSuccess");
                     Snackbar.make(findViewById(android.R.id.content), "MQTT connection success", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 }
@@ -57,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
                     // Something went wrong e.g. connection timeout or firewall problems
-                    //Log.d(TAG, "onFailure");
                     Snackbar.make(findViewById(android.R.id.content), "MQTT connection failed", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
 
@@ -65,7 +67,9 @@ public class MainActivity extends AppCompatActivity {
             });
         } catch (MqttException e) {
             e.printStackTrace();
-        }
+        }*/
+
+
     }
 
     public void dislikeOnClicked(View view){
