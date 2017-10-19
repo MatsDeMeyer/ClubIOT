@@ -16,6 +16,8 @@ import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
+import java.util.Random;
+
 
 /**
  * Created by Mats on 5/10/2017.
@@ -28,10 +30,14 @@ public class MQTT extends Activity{
     final String serverUri = "tcp://143.129.39.151:1883";
     boolean voted = true;
 
-    final String clientId = "ExampleAndroidClient";
+    Random rand = new Random();
+    int n = rand.nextInt(64000);
+
+    String clientId = "";
     final String subscriptionTopic = "clubIOT/SongMeta";
     Context ctxt;
-    public MQTT(Context context, TextView textview) {
+    public MQTT(Context context, TextView textview,String UniqueID) {
+        this.clientId = UniqueID;
         tv1 = textview;
         ctxt = context;
         mqttAndroidClient = new MqttAndroidClient(context, serverUri, clientId);

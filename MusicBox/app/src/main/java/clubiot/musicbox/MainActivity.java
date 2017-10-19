@@ -33,9 +33,6 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mqtt = new MQTT(this, (TextView)findViewById(R.id.textView));
-        client = mqtt.mqttAndroidClient;
-
         try {
             Class<?> c = Class.forName("android.os.SystemProperties");
             Method get = c.getMethod("get", String.class, String.class );
@@ -45,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
         {
         }
 
+        mqtt = new MQTT(this, (TextView)findViewById(R.id.textView),uniqueID);
+        client = mqtt.mqttAndroidClient;
     }
 
     public void dislikeOnClicked(View view){
