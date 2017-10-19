@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         {
         }
 
-        mqtt = new MQTT(this, (TextView)findViewById(R.id.textView),uniqueID);
+        mqtt = new MQTT(this, (TextView)findViewById(R.id.textView),uniqueID,"smartcity","smartcity");
         client = mqtt.mqttAndroidClient;
     }
 

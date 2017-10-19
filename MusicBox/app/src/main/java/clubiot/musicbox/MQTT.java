@@ -15,6 +15,7 @@ import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
+import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 import java.util.Random;
 
@@ -36,15 +37,21 @@ public class MQTT extends Activity{
     String clientId = "";
     final String subscriptionTopic = "clubIOT/SongMeta";
     Context ctxt;
-    public MQTT(Context context, TextView textview,String UniqueID) {
+    public MQTT(Context context, TextView textview,String UniqueID, String mqttAccountName, String mqttAccountPassword) {
         this.clientId = UniqueID;
         tv1 = textview;
         ctxt = context;
-        mqttAndroidClient = new MqttAndroidClient(context, serverUri, clientId);
+        mqttAndroidClient = new MqttAndroidClient(context, serverUri, clientId,new MemoryPersistence());
+
+        SslUtility sslUtility = new SslUtility(ctxt);
+        final MqttConnectOptions options = new MqttConnectOptions();
+        options.setUserName(mqttAccountName);
+        options.setPassword(mqttAccountPassword.toCharArray());
+        options.setCleanSession(true);
         mqttAndroidClient.setCallback(new MqttCallback() {
             @Override
             public void connectionLost(Throwable throwable) {
-                connect();
+                connect(options);
             }
 
             @Override
@@ -53,6 +60,7 @@ public class MQTT extends Activity{
                 tv1.setText(recMessage);
                 Log.w("Mqtt", recMessage);
                 voted = false;
+
             }
 
             @Override
@@ -60,15 +68,15 @@ public class MQTT extends Activity{
 
             }
         });
-        connect();
+        connect(options);
     }
 
     public void setCallback(MqttCallback callback) {
         mqttAndroidClient.setCallback(callback);
     }
 
-    private void connect() {
-        MqttConnectOptions mqttConnectOptions = new MqttConnectOptions();
+    private void connect(MqttConnectOptions options) {
+        MqttConnectOptions mqttConnectOptions = options;
         mqttConnectOptions.setCleanSession(false);
 
         try {
