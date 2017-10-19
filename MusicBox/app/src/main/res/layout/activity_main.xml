@@ -23,7 +23,9 @@
         android:layout_marginRight="8dp"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="260dp" />
+        android:layout_marginBottom="260dp"
+        android:layout_marginStart="61dp"
+        android:layout_marginEnd="8dp" />
 
     <Button
         android:id="@+id/buttonDislike"
@@ -37,28 +39,14 @@
         android:layout_marginRight="61dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="260dp" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="56dp"
-        android:layout_height="wrap_content"
-        app:srcCompat="@android:drawable/ic_dialog_email"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="16dp"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.974" />
+        android:layout_marginBottom="260dp"
+        android:layout_marginEnd="61dp" />
 
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="69dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
         android:background="?attr/colorPrimary"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -87,6 +75,8 @@
         app:layout_anchorGravity="center_vertical|center_horizontal"
         app:layout_constraintBottom_toTopOf="@+id/buttonLike"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
 </android.support.constraint.ConstraintLayout>

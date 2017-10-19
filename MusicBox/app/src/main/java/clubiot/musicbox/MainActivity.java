@@ -33,46 +33,8 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-       FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "No function yet.", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
         mqtt = new MQTT(this, (TextView)findViewById(R.id.textView));
         client = mqtt.mqttAndroidClient;
-
-        //Connect to MQTT Broker
-        /*String clientId = MqttClient.generateClientId();
-        client =
-                new MqttAndroidClient(this.getApplicationContext(), "tcp://143.129.39.151:1883",
-                        clientId);
-
-        try {
-            IMqttToken token = client.connect();
-            token.setActionCallback(new IMqttActionListener() {
-                @Override
-                public void onSuccess(IMqttToken asyncActionToken) {
-                    // We are connected
-                    Snackbar.make(findViewById(android.R.id.content), "MQTT connection success", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                }
-
-                @Override
-                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                    // Something went wrong e.g. connection timeout or firewall problems
-                    Snackbar.make(findViewById(android.R.id.content), "MQTT connection failed", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-
-                }
-            });
-        } catch (MqttException e) {
-            e.printStackTrace();
-        }*/
-
-
 
         try {
             Class<?> c = Class.forName("android.os.SystemProperties");
