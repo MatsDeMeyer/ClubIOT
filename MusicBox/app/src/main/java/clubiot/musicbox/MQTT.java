@@ -31,9 +31,6 @@ public class MQTT extends Activity{
     final String serverUri = "tcp://143.129.39.151:1883";
     boolean voted = true;
 
-    Random rand = new Random();
-    int n = rand.nextInt(64000);
-
     String clientId = "";
     final String subscriptionTopic = "clubIOT/SongMeta";
     Context ctxt;
